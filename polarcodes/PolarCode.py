@@ -70,7 +70,7 @@ class PolarCode:
 
     """
 
-    def __init__(self, M, K, punct_params=('', '', [], [], None,)):
+    def __init__(self, M, K, is_custom_frozen_used=False, custom_frozen=None, punct_params=('', '', [], [], None,)):
         """
         Parameters
         ----------
@@ -86,6 +86,8 @@ class PolarCode:
         self.initialise_code(M, K, punct_params)
         self.status_bar = None  # set by the GUI so that the simulation progress can be tracked
         self.gui_widgets = []
+        self.is_custom_frozen_used = is_custom_frozen_used
+        self.custom_frozen = custom_frozen
 
     def initialise_code(self, M, K, punct_params):
         """
@@ -164,6 +166,10 @@ class PolarCode:
 
         self.message = m
         self.x[self.frozen_lookup == 1] = m
+        if self.is_custom_frozen_used:
+            if self.custom_frozen is None:
+                raise Exception("custom_frozen is used but None")
+            self.x[self.frozen_lookup == 0] = self.custom_frozen
         self.u = self.x.copy()
 
     def get_codeword(self):
