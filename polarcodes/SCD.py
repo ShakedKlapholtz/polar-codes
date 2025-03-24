@@ -34,8 +34,8 @@ class SCD:
 
             # make hard decision at output
             if l in self.myPC.frozen:
-                if self.is_custom_frozen_used:
-                    self.B[l, self.myPC.n] = self.x[l]
+                if self.myPC.is_custom_frozen_used:
+                    self.B[l, self.myPC.n] = self.myPC.x[l]
                 else:
                     self.B[l, self.myPC.n] = 0
             else:
